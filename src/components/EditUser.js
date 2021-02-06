@@ -62,7 +62,7 @@ class EditUser extends Component {
             <div className="header">
               <h2 className="animation a1">Update your account</h2>
               <h4 className="animation a2">
-                Changes will be seen once you click on update
+                Changes will be seen once you click on update.
               </h4>
             </div>
             <form
