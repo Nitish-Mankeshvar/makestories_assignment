@@ -14,8 +14,9 @@ export const actionType = {
   LOGOUT: "LOGOUT",
 };
 
+// `http://localhost:5000`
 // https://makestories-assignment.herokuapp.com
-const URL = `http://localhost:5000`;
+const URL = `https://makestories-assignment.herokuapp.com`;
 export const signUp = (data) => async (dispatch) => {
   try {
     const response = await axios({
