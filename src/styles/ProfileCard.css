@@ -1,0 +1,55 @@
+.container {
+    padding: 100px 0;
+  }
+  
+  a.button {
+      display: inline-block;
+      padding: 1rem;
+      margin: 1rem;
+      color: black;
+      width: 100px;
+      height: 50px;
+  }
+
+  a.button:hover {
+      color: white;
+      background-color: rgb(68, 67, 67);
+      width: 100px;
+      height: 50px;
+  }
+
+  .profile {
+    max-width: 300px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    position: relative;
+  }
+  .profile h2 {
+    color: #0a0a0a;
+  }
+  .profile p {
+    color: rgba(10, 10, 10, 0.8);
+  }
+  .profile .image {
+    width: 75px;
+    height: 75px;
+    background: red;
+    border-radius: 50%;
+    margin: 0 auto;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    transform-origin: bottom left;
+    box-shadow: 0 3px 15px rgba(10, 10, 10, 0.1);
+    transition: all 0.3s ease-in-out;
+    background-image: url("https://images.unsplash.com/photo-1479936343636-73cdc5aae0c3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=200&q=80");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+  .profile:hover .image {
+    transform: scale(1.5);
+    border-radius: 10px;
+  }
