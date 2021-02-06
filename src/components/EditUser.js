@@ -65,7 +65,11 @@ class EditUser extends Component {
                 Changes will be seen once you click on update
               </h4>
             </div>
-            <form onSubmit={(e) => this.handleSubmit(e)} className="form">
+            <form
+              encType="multipart/formdata"
+              onSubmit={(e) => this.handleSubmit(e)}
+              className="form"
+            >
               <input
                 type="text"
                 className="form-field animation a4"

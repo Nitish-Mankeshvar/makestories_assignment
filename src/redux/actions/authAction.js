@@ -16,7 +16,7 @@ export const signUp = (data) => async (dispatch) => {
   try {
     const response = await axios({
       method: "POST",
-      url: `http://localhost:5000/api/v1/gamer`,
+      url: `https://makestories-assignment.herokuapp.com/api/v1/gamer`,
       data: data,
       headers: {
         "Content-type": "application/json",
@@ -32,7 +32,7 @@ export const login = (data) => async (dispatch) => {
   try {
     const response = await axios({
       method: "POST",
-      url: `http://localhost:5000/api/v1/gamer/singleGamer`,
+      url: `https://makestories-assignment.herokuapp.com/api/v1/gamer/singleGamer`,
       data: data,
       headers: {
         "Content-type": "application/json",
@@ -52,7 +52,7 @@ export const updateUser = (id, data) => async (dispatch) => {
   try {
     const response = await axios({
       method: "PUT",
-      url: `http://localhost:5000/api/v1/gamer/${id}`,
+      url: `https://makestories-assignment.herokuapp.com/api/v1/gamer/${id}`,
       data: data,
       headers: {
         "Content-type": "application/json",
@@ -68,7 +68,7 @@ export const getGamer = (id) => async (dispatch) => {
   try {
     const response = await axios({
       method: "GET",
-      url: `http://localhost:5000/api/v1/gamer/${id}`,
+      url: `https://makestories-assignment.herokuapp.com/api/v1/gamer/${id}`,
       headers: {
         "Content-type": "application/json",
       },

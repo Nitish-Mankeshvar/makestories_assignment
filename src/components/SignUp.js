@@ -15,6 +15,7 @@ class SignUp extends Component {
     age: "",
     phoneNumber: "",
     address: "",
+    file: "",
   };
 
   handleSubmit = async (e) => {
@@ -100,6 +101,15 @@ class SignUp extends Component {
                 placeholder="Address"
                 name="address"
                 value={this.state.address}
+                onChange={(e) => this.onChangeHandler(e)}
+              />
+              <label className="animation a3">Profile picture</label>
+              <input
+                type="file"
+                className="form-field animation a3"
+                placeholder="Your Image"
+                name="file"
+                value={this.state.file}
                 onChange={(e) => this.onChangeHandler(e)}
               />
               <button className="animation a6">SIGN UP</button>
