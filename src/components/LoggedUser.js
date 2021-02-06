@@ -27,7 +27,10 @@ class LoggedUser extends React.Component {
     return (
       <div className="container">
         <div className="profile">
-          <div className="image"></div>
+          <img
+            src={`http://localhost:5000/uploads/${this.state.userDetails.data.photo}`}
+            className="image"
+          ></img>
           <h2>{this.state.userDetails.data.username}</h2>
           <hr />
           <div style={{ marginTop: "4rem" }}>

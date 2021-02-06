@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { Form, Input, Button, Typography, message } from "antd";
 import "../styles/SignUp.css";
 import { connect } from "react-redux";
-import { signUp } from "../redux/actions/authAction";
+import { v4 as uuidv4 } from "uuid";
+import { ObjectId } from "mongodb";
+import { signUp, uploadProfilePhoto } from "../redux/actions/authAction";
 import { withRouter } from "react-router";
 
 const { Title } = Typography;
@@ -15,24 +17,57 @@ class SignUp extends Component {
     age: "",
     phoneNumber: "",
     address: "",
-    file: "",
+    photofile: null,
+  };
+
+  handleFileUpload = (photofile) => {
+    const data = new FormData();
+    data.append("file", photofile, photofile.name);
+    return data;
   };
 
   handleSubmit = async (e) => {
     e.preventDefault();
-    const { username, email, password, age, phoneNumber, address } = this.state;
+    const {
+      username,
+      email,
+      password,
+      age,
+      phoneNumber,
+      address,
+      photofile,
+    } = this.state;
     console.log(this.props);
-    if (!username || !email || !password || !age || !phoneNumber || !address) {
-      message.error("Please fill all the fields");
+    if (
+      !username ||
+      !email ||
+      !password ||
+      !age ||
+      !phoneNumber ||
+      !address ||
+      !photofile
+    ) {
+      message.error("Please fill all the fields and upload profile photo");
       return;
     }
     try {
       message.loading("Making you account..");
-      const response = await this.props.signUp(this.state);
-      console.log(response);
+      await this.props.signUp(this.state);
       message.destroy();
-      message.success("Made your account! you can now login");
-      this.props.history.push("/login");
+
+      if (this.props.createdUser) {
+        console.log(this.props.createdUser.data._id);
+        if (photofile) {
+          let data = this.handleFileUpload(photofile);
+          await this.props.uploadProfilePhoto(
+            this.props.createdUser.data._id,
+            data
+          );
+          console.log(this.props);
+          message.success("Made your account! you can now login");
+          this.props.history.push("/login");
+        }
+      }
     } catch (error) {
       message.error("Server error");
       console.log(error);
@@ -42,6 +77,12 @@ class SignUp extends Component {
   onChangeHandler = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
+    });
+  };
+
+  onFileChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.files[0],
     });
   };
 
@@ -108,9 +149,8 @@ class SignUp extends Component {
                 type="file"
                 className="form-field animation a3"
                 placeholder="Your Image"
-                name="file"
-                value={this.state.file}
-                onChange={(e) => this.onChangeHandler(e)}
+                name="photofile"
+                onChange={(e) => this.onFileChange(e)}
               />
               <button className="animation a6">SIGN UP</button>
             </form>
@@ -124,8 +164,12 @@ class SignUp extends Component {
 const mapStateToProps = (state) => {
   console.log(state);
   return {
-    hi: "hi",
+    createdUser: state.Auth.CREATE_USER_SUCCESS,
+    uploadedPhoto: state.Auth.UPLOAD_PHOTO_SUCCESS,
+    uploadError: state.Auth.UPLOAD_PHOTO_ERROR,
   };
 };
 
-export default connect(mapStateToProps, { signUp })(withRouter(SignUp));
+export default connect(mapStateToProps, { signUp, uploadProfilePhoto })(
+  withRouter(SignUp)
+);

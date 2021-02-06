@@ -7,6 +7,8 @@ const initState = {
   GET_USER_FAILURE: null,
   GET_GAMER: null,
   GET_GAMER_ERROR: null,
+  UPLOAD_PHOTO_SUCCESS: null,
+  UPLOAD_PHOTO_ERROR: null,
 };
 
 export default function authReducer(state = initState, action) {
@@ -52,6 +54,18 @@ export default function authReducer(state = initState, action) {
         ...state,
         GET_GAMER: null,
         GET_GAMER_ERROR: action.payload,
+      };
+    case actionType.UPLOAD_PHOTO_SUCCESS:
+      return {
+        ...state,
+        UPLOAD_PHOTO_SUCCESS: action.payload,
+        UPLOAD_PHOTO_ERROR: null,
+      };
+    case actionType.UPLOAD_PHOTO_ERROR:
+      return {
+        ...state,
+        UPLOAD_PHOTO_SUCCESS: null,
+        UPLOAD_PHOTO_ERROR: action.payload,
       };
     default:
       return {

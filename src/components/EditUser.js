@@ -3,7 +3,11 @@ import { Form, Input, Button, Typography, message } from "antd";
 import "../styles/SignUp.css";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import { updateUser, getGamer } from "../redux/actions/authAction";
+import {
+  updateUser,
+  getGamer,
+  uploadProfilePhoto,
+} from "../redux/actions/authAction";
 
 const { Title } = Typography;
 
@@ -15,6 +19,7 @@ class EditUser extends Component {
     age: "",
     phoneNumber: "",
     address: "",
+    photofile: null,
   };
 
   async componentDidMount() {
@@ -26,13 +31,28 @@ class EditUser extends Component {
         password: this.props.gamerDetails.data.password,
         age: this.props.gamerDetails.data.age,
         phoneNumber: this.props.gamerDetails.data.phoneNumber,
+        address: this.props.gamerDetails.data.address,
       });
     }
   }
 
+  handleFileUpload = (photofile) => {
+    const data = new FormData();
+    data.append("file", photofile, photofile.name);
+    return data;
+  };
+
   handleSubmit = async (e) => {
     e.preventDefault();
-    const { username, email, password, age, phoneNumber, address } = this.state;
+    const {
+      username,
+      email,
+      password,
+      age,
+      phoneNumber,
+      address,
+      photofile,
+    } = this.state;
     console.log(this.props);
     if (!username || !email || !password || !age || !phoneNumber || !address) {
       message.error("Please fill all the fields");
@@ -41,6 +61,13 @@ class EditUser extends Component {
     try {
       const id = this.props.match.params.id;
       await this.props.updateUser(id, this.state);
+      if (photofile) {
+        let data = this.handleFileUpload(photofile);
+        await this.props.uploadProfilePhoto(id, data);
+        message.success("updated successfully!");
+        this.props.history.push("/user");
+        return;
+      }
       message.success("updated successfully!");
       this.props.history.push("/user");
     } catch (error) {
@@ -51,6 +78,12 @@ class EditUser extends Component {
   onChangeHandler = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
+    });
+  };
+
+  onFileChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.files[0],
     });
   };
 
@@ -118,6 +151,13 @@ class EditUser extends Component {
                 value={this.state.address}
                 onChange={(e) => this.onChangeHandler(e)}
               />
+              <input
+                type="file"
+                className="form-field animation a3"
+                placeholder="Your Image"
+                name="photofile"
+                onChange={(e) => this.onFileChange(e)}
+              />
               <button type="submit" className="animation a6">
                 UPDATE USER
               </button>
@@ -137,6 +177,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { updateUser, getGamer })(
-  withRouter(EditUser)
-);
+export default connect(mapStateToProps, {
+  updateUser,
+  getGamer,
+  uploadProfilePhoto,
+})(withRouter(EditUser));
