@@ -28,7 +28,7 @@ class LoggedUser extends React.Component {
       <div className="container">
         <div className="profile">
           <img
-            src={`http://localhost:5000/uploads/${this.state.userDetails.data.photo}`}
+            src={`https://makestories-assignment.herokuapp.com/uploads/${this.state.userDetails.data.photo}`}
             className="image"
           ></img>
           <h2>{this.state.userDetails.data.username}</h2>
